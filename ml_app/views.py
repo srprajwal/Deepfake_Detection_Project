@@ -26,6 +26,7 @@ from .forms import VideoUploadForm
 index_template_name = 'index.html'
 predict_template_name = 'predict.html'
 about_template_name = "about.html"
+home_template_name = "home.html"
 
 im_size = 112
 mean=[0.485, 0.456, 0.406]
@@ -119,8 +120,7 @@ def im_convert(tensor, video_file_name):
     image = image.numpy()
     image = image.transpose(1,2,0)
     image = image.clip(0, 1)
-    # This image is not used
-    # cv2.imwrite(os.path.join(settings.PROJECT_DIR, 'uploaded_images', video_file_name+'_convert_2.png'),image*255)
+   
     return image
 
 def im_plot(tensor):
@@ -152,7 +152,7 @@ def plot_heat_map(i, model, img, path = './', video_file_name=''):
   _,prediction = torch.max(logits,1)
   idx = np.argmax(logits.detach().cpu().numpy())
   bz, nc, h, w = fmap.shape
-  #out = np.dot(fmap[-1].detach().cpu().numpy().reshape((nc, h*w)).T,weight_softmax[idx,:].T)
+  
   out = np.dot(fmap[i].detach().cpu().numpy().reshape((nc, h*w)).T,weight_softmax[idx,:].T)
   predict = out.reshape(h,w)
   predict = predict - np.min(predict)
@@ -360,9 +360,7 @@ def predict_page(request):
                 print("<=== | Prediction Done | ===>")
                 print("--- %s seconds ---" % (time.time() - start_time))
 
-                # Uncomment if you want to create heat map images
-                # for j in range(sequence_length):
-                #     heatmap_images.append(plot_heat_map(j, model, video_dataset[i], './', video_file_name_only))
+             
 
             # Render results
             context = {
@@ -390,3 +388,9 @@ def handler404(request,exception):
     return render(request, '404.html', status=404)
 def cuda_full(request):
     return render(request, 'cuda_full.html')
+
+def feature(request):
+    return render(request, about_template_name)
+
+def home(request):
+    return render(request, home_template_name)

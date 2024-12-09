@@ -1,72 +1,118 @@
-{% extends 'base.html' %}
-{%load static%}
-{%block content%}
-<div class="bg">
-    <div class="container">
+<style>
+    .hover-effect:hover {
+        background-color: #0056b3;
+        transform: translateY(-2px);
+        transition: all 0.3s ease;
+    }
 
-        <div class="row align-items-center justify-content-center">
-            <div class="col-12 my-auto">
-                <div class="logo text-center mb-3"><img src="{% static 'images/logo1.png'%}" alt="Logo"></div>
-                <div class="width-400">
-                    <video width="100%" controls id="videos">
-                        <source src="" id="video_source">
-                        Your browser does not support HTML5 video.
-                    </video>
-                    <form class="form" method="POST" enctype="multipart/form-data" name="video-upload" id="video-upload"
-                        class="text-center mt-3">
-                        {%csrf_token%}
-                        <div class="form-group">
-                            <label>{{form.upload_video_file.widget}}</label>
-                            {{form.upload_video_file}}
-                            <!-- <input type="file" id="{{form.upload_video_file.id_for_label}}" name="{{form.upload_video_file.name}}" /> -->
-                            {%if form.upload_video_file.errors%}
-                            {%for each_error in form.upload_video_file.errors%}
-                            <div class="alert alert-danger mt-1 {{form.upload_video_file.id_for_label}}">
-                                {{each_error}}
-                            </div>
-                            {%endfor%}
-                            {%endif%}
-                        </div>
-                        <div class="form-group">
-                            <label for="{{form.sequence_length.id_for_label}}">{{form.sequence_length.label}}:
-                            </label><span id="slider-value"></span>
-                            <input type="number" hidden="hidden" id="{{form.sequence_length.id_for_label}}"
-                                name="{{form.sequence_length.name}}"></input>
-                            <div id='slider'></div>
-                            {%if form.sequence_length.errors%}
-                            {%for each_error in form.sequence_length.errors%}
-                            <div class="alert alert-danger mt-1 {{form.sequence_length.id_for_label}}">
-                                {{each_error}}
-                            </div>
-                            {%endfor%}
-                            {%endif%}
-                        </div>
-                        <button id="videoUpload" type="submit" name="submit"
-                            class="btn btn-success mt-3 btn-block">Upload</button>
-                    </form>
-                </div>
-            </div>
+
+    .form-wrapper {
+        background: rgba(0, 0, 0, 0.8);
+
+        color: #fff;
+
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    }
+
+    .slider {
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    .value-display {
+        font-weight: bold;
+        color: #007bff;
+
+    }
+
+    .video-container {
+        margin-bottom: 20px;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    video {
+        display: block;
+        border-radius: 10px;
+    }
+
+    button:hover {
+        background-color: #0056b3 !important;
+    }
+</style>
+
+
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+    <div class="form-wrapper">
+        <div class="video-container mb-4">
+            <video class="w-100" controls id="videos">
+                <source src="" id="video_source">
+                Your browser does not support HTML5 video.
+            </video>
         </div>
+
+        <form class="video-upload-form" method="POST" enctype="multipart/form-data" name="video-upload"
+            id="video-upload">
+            {% csrf_token %}
+
+            <div class="form-group mb-3">
+                <label for="{{ form.upload_video_file.id_for_label }}" class="form-label text-white">Upload
+                    Video</label>
+                {{ form.upload_video_file }}
+                {% if form.upload_video_file.errors %}
+                {% for each_error in form.upload_video_file.errors %}
+                <div class="text-danger">{{ each_error }}</div>
+                {% endfor %}
+                {% endif %}
+            </div>
+
+            <div class="form-group mb-3">
+                <label for="{{ form.sequence_length.id_for_label }}" class="form-label text-white">
+                    {{ form.sequence_length.label }}:
+                </label>
+                <span id="slider-value" class="value-display">10</span>
+                <input type="number" hidden="hidden" id="{{ form.sequence_length.id_for_label }}"
+                    name="{{ form.sequence_length.name }}">
+                <div id="slider" class="slider"></div>
+                {% if form.sequence_length.errors %}
+                {% for each_error in form.sequence_length.errors %}
+                <div class="text-danger">{{ each_error }}</div>
+                {% endfor %}
+                {% endif %}
+            </div>
+
+            <button id="videoUpload" type="submit" name="submit" class="btn btn-primary w-100 hover-effect">
+                Upload Video
+            </button>
+        </form>
     </div>
 </div>
-{%endblock%}
-{%block js_cripts%}
-<script src="{%static 'js/script.js'%}"></script>
+{% endblock %}
+
+{% block js_cripts %}
+<script src="{% static 'js/script.js' %}"></script>
 <script>
     $(function () {
         var sliderSequenceNumbers = [10, 20, 40];
-        var slider = $("div#slider").slider({
-            value: 1,
+        var slider = $("#slider").slider({
+            value: 0,
             min: 0,
             max: sliderSequenceNumbers.length - 1,
             slide: function (event, ui) {
-                $('#{{form.sequence_length.id_for_label}}').val(sliderSequenceNumbers[ui.value]);
-                $('#{{form.sequence_length.id_for_label}}').val(sliderSequenceNumbers[ui.value]);
+                $('#{{ form.sequence_length.id_for_label }}').val(sliderSequenceNumbers[ui.value]);
                 $('#slider-value').html(sliderSequenceNumbers[ui.value]);
             }
         });
-        $("#{{form.sequence_length.id_for_label}}").val(sliderSequenceNumbers[$("#slider").slider("value")]);
+
+        // Set initial value for slider
+        $("#{{ form.sequence_length.id_for_label }}").val(sliderSequenceNumbers[$("#slider").slider("value")]);
         $('#slider-value').html(sliderSequenceNumbers[$("#slider").slider("value")]);
     });
 </script>
-{%endblock%}
+{% endblock %}

@@ -1,4 +1,50 @@
 {% extends 'base.html' %}
 {% load static %}
-{%block content%}
-{%endblock%}
+{% block content %}
+
+<div class="container py-5">
+  <!-- Title -->
+  <h1 class="display-4 text-center text-primary mb-4">About Us</h1>
+
+  <!-- Introduction -->
+
+  <!-- Detection Approach -->
+  <h2 class="text-dark mt-4">Our Approach</h2>
+  <p class="text-justify text-black">
+    We presented a neural network-based approach to classify the video as deep fake or real, along with the confidence
+    of the proposed model. The proposed method is inspired by the way deep fakes are created by GANs with the help of
+    Autoencoders. Our method performs frame-level detection using ResNext CNN and video classification using RNN along
+    with LSTM. This enables us to analyze both spatial and temporal features effectively. The proposed method is capable
+    of detecting the video as a deep fake or real based on the listed parameters in our paper. We believe that it will
+    provide very high accuracy on real-time data.
+  </p>
+
+  <!-- Importance of Deepfake Detection -->
+  <h2 class="text-dark mt-4">Why Deepfake Detection Matters</h2>
+  <p class="text-justify text-black">
+    Deepfake technology has evolved rapidly, enabling the creation of hyper-realistic fake videos that are nearly
+    indistinguishable from reality. These videos have been used for various malicious purposes, such as misinformation
+    campaigns, identity theft, and even fraud. Detecting deepfakes is essential for maintaining trust in digital
+    content, ensuring cybersecurity, and protecting individuals from being misrepresented or defamed.
+  </p>
+
+  <!-- Advanced Techniques -->
+  <h2 class="text-dark mt-4">Advanced Techniques in Detection</h2>
+  <p class="text-justify text-black">
+    Our system incorporates cutting-edge technologies such as transfer learning and attention mechanisms to enhance
+    detection accuracy. By leveraging pre-trained models like ResNet and fine-tuning them for deepfake-specific tasks,
+    we achieve high precision in identifying subtle artifacts left by manipulation tools. Additionally, our use of LSTM
+    layers for temporal analysis ensures robust detection for even highly dynamic videos.
+  </p>
+
+  <!-- Future of Deepfake Detection -->
+  <h2 class="text-dark mt-4">The Future of Deepfake Detection</h2>
+  <p class="text-justify text-black">
+    As deepfake generation methods become more sophisticated, detection algorithms must evolve to stay ahead. The future
+    of deepfake detection lies in integrating AI-powered tools into accessible platforms, enabling real-time analysis of
+    videos uploaded on social media and other platforms. Collaborative efforts between AI researchers, governments, and
+    tech companies will play a critical role in combating this emerging threat.
+  </p>
+</div>
+
+{% endblock %}

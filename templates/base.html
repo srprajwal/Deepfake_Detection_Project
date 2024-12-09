@@ -1,36 +1,183 @@
 <!DOCTYPE html>
 <html lang="en">
 {% load static %}
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"> -->
-        <link rel="stylesheet" href="/static/bootstrap/bootstrap.min.css">
-    <!-- <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> -->
+
+    <link rel="stylesheet" href="/static/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="/static/css/jquery-ui.css">
 
     <link rel="stylesheet" href="{% static 'css/styles.css'%}">
     <title>Deepfake Detection</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+        }
+
+        .navbar {
+            background-color: #d4c6f0;
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            color: #7a4ac7;
+        }
+
+        .navbar-brand:hover {
+            color: #562099;
+        }
+
+        .main-container {
+            text-align: center;
+            padding: 50px 20px;
+        }
+
+        .main-container h1 {
+            font-size: 2rem;
+            color: #4a3f85;
+            margin-bottom: 20px;
+        }
+
+        .upload-btn {
+            background-color: #7a4ac7;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 30px;
+            border: none;
+            font-size: 1rem;
+        }
+
+        .upload-btn:hover {
+            background-color: #5c358c;
+            color: #fff;
+        }
+
+        .upload-area {
+            border: 2px dashed #7a4ac7;
+            padding: 40px;
+            border-radius: 10px;
+            background-color: #f5f0fa;
+            display: inline-block;
+        }
+
+        footer {
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+
+
+        .navbar {
+
+
+            padding: 1rem 2rem;
+
+        }
+
+        .navbar .navbar-brand {
+            font-size: 2rem;
+
+            font-weight: 700;
+            color: white;
+            letter-spacing: 2px;
+
+        }
+
+        .navbar-nav .nav-item {
+            margin-left: 2rem;
+
+        }
+
+        .navbar-nav .nav-link {
+            font-size: 1.2rem;
+
+            color: white;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+
+            transition: color 0.3s ease;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: #ffd700;
+
+        }
+
+
+        @media (max-width: 767px) {
+            .navbar {
+                padding: 1rem;
+
+            }
+
+            .navbar-nav .nav-item {
+                margin-left: 1rem;
+
+            }
+
+
+
+        }
+    </style>
 </head>
+
 <body>
-    {%include 'nav-bar.html'%}
+
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="#"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'ml_app:home' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'ml_app:detection' %}">Detection</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'ml_app:about' %}">About</a>
+                    </li>
+
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+
+
+
+
     {%block content%}
     {%endblock%}
-    <!-- <script src="https://code.jquery.com/jquery-3.4.1.min.js"
-        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script> -->
-        <script src="/static/js/jquery-3.4.1.min.js" ></script>
-    <!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-        crossorigin="anonymous"></script> -->
-        <script src="/static/js/popper.min.js"></script>
-    <!-- <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
-        integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script> -->
-        <script src="/static/js/jquery-ui.min.js"></script>
-    
-        {%block js_cripts%}
+
+    <script src="/static/js/jquery-3.4.1.min.js"></script>
+
+    <script src="/static/js/popper.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+        integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
+    <script src="/static/js/jquery-ui.min.js"></script>
+
+    {%block js_cripts%}
     {%endblock%}
-    {%include 'footer.html'%}
+
+    <footer class="footer">
+        <div class="container">
+            <center>
+                <span class="text-muted">Copyright &copy; {% now 'Y' %}</span>
+            </center>
+        </div>
+    </footer>
+
+
 </body>
 
 </html>
